@@ -4,6 +4,10 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    port: 8080,
+    strictPort: true, // Don't automatically try another port
+  },
   plugins: [react()],
   resolve: {
     alias: {
