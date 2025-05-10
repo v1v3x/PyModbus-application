@@ -6,9 +6,16 @@ import path from "path";
 export default defineConfig({
   server: {
     port: 8080,
-    strictPort: true, // Don't automatically try another port
+    strictPort: true,
+    host: true, // Listen on all network interfaces
   },
-  plugins: [react()],
+  plugins: [
+    react({
+      jsxImportSource: "react",
+      tsDecorators: true,
+      plugins: [["@swc/plugin-styled-components", {}]],
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -24,5 +31,8 @@ export default defineConfig({
         },
       },
     },
+  },
+  esbuild: {
+    jsxInject: `import React from 'react'`,
   },
 });

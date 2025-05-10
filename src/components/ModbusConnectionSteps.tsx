@@ -16,9 +16,10 @@ interface ModbusConnectionStepsProps {
   connectionType: "tcp" | "rtu" | "ascii";
   onComplete: (config: any) => void;
   onBack: () => void;
+  onCancel?: () => void;
 }
 
-export function ModbusConnectionSteps({ connectionType, onComplete, onBack }: ModbusConnectionStepsProps) {
+export function ModbusConnectionSteps({ connectionType, onComplete, onBack, onCancel }: ModbusConnectionStepsProps) {
   const [config, setConfig] = useState({
     // Common settings
     timeout: "1",
@@ -173,9 +174,16 @@ export function ModbusConnectionSteps({ connectionType, onComplete, onBack }: Mo
             )}
 
             <div className="flex justify-between pt-4">
-              <Button variant="outline" onClick={onBack}>
-                Back
-              </Button>
+              <div className="flex gap-2">
+                {onCancel && (
+                  <Button variant="outline" onClick={onCancel}>
+                    Cancel
+                  </Button>
+                )}
+                <Button variant="outline" onClick={onBack}>
+                  Back
+                </Button>
+              </div>
               <Button onClick={handleSubmit}>
                 Save Connection
               </Button>

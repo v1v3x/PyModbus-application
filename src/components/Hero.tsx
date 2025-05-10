@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Terminal, Zap, Server } from "lucide-react";
 import { motion } from "framer-motion";
@@ -38,7 +37,7 @@ const Hero = () => {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-xl text-muted-foreground max-w-2xl"
           >
-            PyModbus is a fully featured Modbus protocol implementation supporting both synchronous and asynchronous communications.
+            ModSync is a fully featured Modbus protocol implementation supporting both synchronous and asynchronous communications.
           </motion.p>
           
           <motion.div
@@ -48,13 +47,13 @@ const Hero = () => {
             className="flex flex-col sm:flex-row items-center gap-4 mt-6"
           >
             <Button size="lg" asChild>
-              <a href="https://github.com/v1v3x/pymodbus/blob/master/README.md" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/v1v3x/ModSyncX/blob/master/README.md" target="_blank" rel="noopener noreferrer">
                 Get Started
                 <ChevronRight className="ml-2 h-4 w-4" />
               </a>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <a href="https://github.com/v1v3x/pymodbus" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/v1v3x/ModSyncX" target="_blank" rel="noopener noreferrer">
                 View on GitHub
               </a>
             </Button>

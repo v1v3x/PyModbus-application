@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -14,12 +14,21 @@ import { ModbusConnectionSteps } from "./ModbusConnectionSteps";
 
 interface ConnectionSetupProps {
   onComplete: (config: any) => void;
+  initialValues?: any;
+  onCancel: () => void;
 }
 
-export function ConnectionSetup({ onComplete }: ConnectionSetupProps) {
+export function ConnectionSetup({ onComplete, initialValues, onCancel }: ConnectionSetupProps) {
   const [step, setStep] = useState<"initial" | "config">("initial");
-  const [connectionName, setConnectionName] = useState("");
-  const [connectionType, setConnectionType] = useState<"tcp" | "rtu" | "ascii" | "">(""); 
+  const [connectionName, setConnectionName] = useState(initialValues?.name || "");
+  const [connectionType, setConnectionType] = useState<"tcp" | "rtu" | "ascii" | "">(initialValues?.type || "");
+  
+  // Initialize with existing values if editing
+  useEffect(() => {
+    if (initialValues) {
+      setStep("config"); // Skip to config step when editing
+    }
+  }, [initialValues]);
 
   const handleInitialSubmit = () => {
     if (connectionName && connectionType) {
@@ -41,6 +50,7 @@ export function ConnectionSetup({ onComplete }: ConnectionSetupProps) {
         connectionType={connectionType as "tcp" | "rtu" | "ascii"}
         onComplete={handleConfigComplete}
         onBack={() => setStep("initial")}
+        onCancel={onCancel}
       />
     );
   }
@@ -75,13 +85,14 @@ export function ConnectionSetup({ onComplete }: ConnectionSetupProps) {
                 </SelectContent>
               </Select>
             </div>
-            <Button 
-              className="w-full mt-4" 
-              onClick={handleInitialSubmit}
-              disabled={!connectionName || !connectionType}
-            >
-              Next
-            </Button>
+            <div className="flex justify-between mt-4">
+              <Button variant="outline" onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button onClick={handleInitialSubmit} disabled={!connectionName || !connectionType}>
+                Next
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
